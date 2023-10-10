@@ -1,0 +1,35 @@
+from bs4 import BeautifulSoup
+import requests
+import re
+import pandas as pd
+import datetime
+
+category = ['Politics', 'Economic', 'Social', 'Culture', 'World', 'IT']
+url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100'
+# 정치탭 링크
+
+
+headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"}
+# resp = requests.get(url, headers = headers) # requests는 url에 요청하고 url로부터 응답을 받아옴
+# # 하지만 몇 웹페이지에서 막아놓음 따라서 브라우저라고 속여야 함 4:04 / user Agent 정보가 있어야 됨
+#
+# # print(list(resp))
+# print(type(resp))
+# soup = BeautifulSoup(resp.text, 'html.parser')
+# # print(soup)
+# title_tags = soup.select('.sh_text_headline') # class가지고 요소들을 가지고 올 때는 .을 찍음
+# print(title_tags)
+# print(len(title_tags))
+# print(type(title_tags[0]))
+# titles = []
+# for title_tags in title_tags:
+#     titles.append(re.compile('[^가-힣|a-z|A-Z]').sub(' ', title_tags.text)) # re는 따로 떼어낼 때 씀
+#     # ^는 처음부터 라는 뜻, sub는 빼라는 뜻 [^가-힣|a-z|A-Z] 빼고 ' ' 공백을 넣어라 4:30
+# print(titles)
+# print(len(titles))
+
+df_titles = pd.DataFrame() # 비어있는 데이터 프레임
+re_title = re.compile('[^가-힣]|a-z|A-Z')
+
+for i in range(6):
+    resp = requests.get('https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=10{}'.format(i), )
